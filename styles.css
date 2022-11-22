@@ -11,6 +11,11 @@ body {
 	padding-top: 20px;
 
 }
+
+.faded {
+	opacity: 0.1;
+}
+
 .square {
 	width: 30%;
 	background-color: purple;

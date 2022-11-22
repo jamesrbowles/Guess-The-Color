@@ -6,10 +6,11 @@ const squares = document.querySelectorAll(".square");
 const reset = document.getElementById("reset");
 const easy = document.querySelector(".easy")
 const hard = document.querySelector(".hard")
+const h1Header = document.querySelector("h1")
+const message = document.getElementById("message");
 
-// random RGB color generator from start
 
-
+// Random colors array
 const makeColor = () => {
     let r = Math.floor(Math.random() * 256);
     let g = Math.floor(Math.random() * 256);
@@ -26,10 +27,8 @@ const genRandomColor = (num) => {
     return arr;
 }
 
-console.log(genRandomColor(numSquares))
 
-
-// Easy or Hard
+// Easy or Hard buttons
 
 easy.addEventListener('click', function() {
     if(!easy.classList.contains('selected')){
@@ -43,7 +42,6 @@ easy.addEventListener('click', function() {
      genColors()
 })
 
-
 hard.addEventListener('click', function() {
     if(!hard.classList.contains('selected')){
         hard.classList.add('selected')
@@ -56,17 +54,48 @@ hard.addEventListener('click', function() {
      genColors()
 })
 
-// Generate random Colors
 
+// Reset Values at end of game
+const resetValues = () => {
+    squares.forEach(square => square.classList.remove('faded'));
+    message.innerHTML = ''
+    h1Header.style.backgroundColor = '#2C8E99'
+    reset.innerHTML = 'New Colors'
+}
+
+// Generate and pick random colors
 const genColors = () => {
+    resetValues()
+    //Random RGB value displayed
     colors = genRandomColor(numSquares)
+    let randIndex = Math.floor(Math.random()*numSquares)
+    let displayedColor = colors[randIndex]
+    colorDisplay.innerHTML = displayedColor
+
+    //Color the squares
     for (let i = 0; i < squares.length; i++) {
         squares[i].style.backgroundColor = colors[i]
     }
+
+    // functionality for picking a square
+    squares.forEach(square => square.addEventListener('click', function(){
+        square.classList.add('faded')
+        if (square.style.backgroundColor === displayedColor) {
+            squares.forEach(square => square.classList.remove('faded'));
+            h1Header.style.backgroundColor = displayedColor
+            message.innerHTML = 'Correct'
+            reset.innerHTML = 'Play Again'
+            for (let i = 0; i < squares.length; i++) {
+                squares[i].style.backgroundColor = displayedColor
+            }
+        } else {
+            message.innerHTML = 'Try Again'
+        }
+    }));
+
+    // New colors reset button
+    reset.addEventListener("click", genColors);
 }
 
-// random RGB from reset
-
-reset.addEventListener("click", genColors);
 
 genColors()
