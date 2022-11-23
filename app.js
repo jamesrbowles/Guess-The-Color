@@ -34,24 +34,24 @@ easy.addEventListener('click', function() {
     if(!easy.classList.contains('selected')){
         easy.classList.add('selected')
         hard.classList.remove('selected')
-    }
-    numSquares = 3
+        numSquares = 3
     for (let i = 3; i < squares.length; ++i) {
         squares[i].classList.remove('square');
      }
      genColors()
+    }
 })
 
 hard.addEventListener('click', function() {
     if(!hard.classList.contains('selected')){
         hard.classList.add('selected')
         easy.classList.remove('selected')
-    }
-    numSquares = 6
+        numSquares = 6
     for (let i = 0; i < squares.length; ++i) {
         squares[i].classList.add('square');
      }
      genColors()
+    }
 })
 
 
